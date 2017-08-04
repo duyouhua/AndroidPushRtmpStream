@@ -51,8 +51,11 @@ JNIEXPORT void JNICALL Java_com_ytx_push_FFmpegUtils_push
     int videoindex=-1;
     //打开输出的AVIOContext IO流上下文
     AVOutputFormat *ofmt = NULL;
-    int64_t start_time = av_gettime();
+    int64_t start_time;
     AVPacket pkt;
+
+    av_log_set_callback(log_callback);
+
     //注册组件
     av_register_all();
     //初始化网络
@@ -105,7 +108,7 @@ JNIEXPORT void JNICALL Java_com_ytx_push_FFmpegUtils_push
         }
     }
 
-
+    start_time = av_gettime();
     while (1) {
         AVStream *in_stream, *out_stream;
         //读取AVPacket
